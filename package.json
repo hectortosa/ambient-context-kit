@@ -1,0 +1,21 @@
+{
+  "name": "ambient-context-kit",
+  "version": "0.1.0",
+  "description": "Claude Code plugin for ambient personal and professional context management",
+  "author": "hectortosa",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hectortosa/ambient-context-kit.git"
+  },
+  "keywords": [
+    "claude-code-plugin",
+    "knowledge-management",
+    "productivity",
+    "vault",
+    "context",
+    "memory",
+    "mcp"
+  ],
+  "private": false
+}

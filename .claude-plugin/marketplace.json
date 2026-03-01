@@ -1,0 +1,30 @@
+{
+  "name": "ambient-context-kit",
+  "owner": {
+    "name": "hectortosa"
+  },
+  "metadata": {
+    "description": "Ambient personal and professional context management for Claude Code",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ambient-context-kit",
+      "source": "./",
+      "description": "Structured knowledge management with daily workflows, memory system, task management, and MCP server",
+      "version": "0.1.0",
+      "author": {
+        "name": "hectortosa"
+      },
+      "keywords": [
+        "knowledge-management",
+        "productivity",
+        "vault",
+        "context",
+        "memory",
+        "tasks",
+        "mcp"
+      ]
+    }
+  ]
+}

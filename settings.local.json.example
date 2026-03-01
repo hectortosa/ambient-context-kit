@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "toolName": "WebSearch",
+    "pattern": "{\"query\":\"example search query\"}",
+    "approvedAt": 0,
+    "scope": "always"
+  },
+  "allowedExportPaths": [
+    "~/Desktop",
+    "~/Downloads"
+  ]
+}

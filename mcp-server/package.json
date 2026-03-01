@@ -1,0 +1,20 @@
+{
+  "name": "ambient-context-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "stdio": "bun run src/stdio.ts",
+    "dev": "bun run --watch src/index.ts",
+    "toc:generate": "bun run src/utils/toc.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "gray-matter": "^4.0.3",
+    "glob": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.3.0"
+  }
+}

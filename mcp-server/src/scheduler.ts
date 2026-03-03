@@ -145,7 +145,7 @@ const WORKFLOW_LABELS: Record<string, string> = {
 async function executeScheduled(entry: ScheduleEntry): Promise<void> {
   if (state.running) {
     console.error(
-      `[scheduler] Skipping ${entry.workflow} - another workflow is running: ${state.running}`
+      `[scheduler] Skipping ${entry.workflow} - another workflow is running: ${state.running}`,
     );
     return;
   }
@@ -157,7 +157,7 @@ async function executeScheduled(entry: ScheduleEntry): Promise<void> {
   state.lastRun[lastRunKey] = new Date().toISOString();
 
   console.error(
-    `[scheduler] Starting scheduled workflow (dry run): ${entry.workflow}`
+    `[scheduler] Starting scheduled workflow (dry run): ${entry.workflow}`,
   );
 
   try {
@@ -165,7 +165,7 @@ async function executeScheduled(entry: ScheduleEntry): Promise<void> {
 
     const result = await invokeClaude({
       prompt: entry.command + dryRunInstruction,
-      timeout: 300000,
+      timeout: 1500000,
     });
 
     const label = WORKFLOW_LABELS[entry.workflow] || entry.workflow;
@@ -178,7 +178,7 @@ async function executeScheduled(entry: ScheduleEntry): Promise<void> {
     if (result.success) {
       noteContent += result.output;
       console.error(
-        `[scheduler] Workflow ${entry.workflow} completed, saving to ${notePath}`
+        `[scheduler] Workflow ${entry.workflow} completed, saving to ${notePath}`,
       );
     } else {
       noteContent += `## Workflow Failed\n\n**Error**: ${result.error}\n`;
@@ -186,7 +186,7 @@ async function executeScheduled(entry: ScheduleEntry): Promise<void> {
         noteContent += `\n**Partial output**:\n\n${result.output}\n`;
       }
       console.error(
-        `[scheduler] Workflow ${entry.workflow} failed: ${result.error}`
+        `[scheduler] Workflow ${entry.workflow} failed: ${result.error}`,
       );
     }
 
@@ -210,7 +210,7 @@ function tick(): void {
     if (shouldRun(entry)) {
       // Run async, don't await
       executeScheduled(entry).catch((err) =>
-        console.error(`[scheduler] Unexpected error:`, err)
+        console.error(`[scheduler] Unexpected error:`, err),
       );
     }
   }
@@ -221,7 +221,9 @@ function tick(): void {
  */
 export function startScheduler(): void {
   if (!state.enabled) {
-    console.error("[scheduler] Disabled (set SCHEDULER_ENABLED=true to enable)");
+    console.error(
+      "[scheduler] Disabled (set SCHEDULER_ENABLED=true to enable)",
+    );
     return;
   }
 
@@ -233,7 +235,7 @@ export function startScheduler(): void {
       .join(",");
     const status = entry.enabled ? "ON" : "OFF";
     console.error(
-      `  ${entry.workflow}: ${String(entry.hour).padStart(2, "0")}:${String(entry.minute).padStart(2, "0")} [${days}] (${status})`
+      `  ${entry.workflow}: ${String(entry.hour).padStart(2, "0")}:${String(entry.minute).padStart(2, "0")} [${days}] (${status})`,
     );
   }
 
@@ -303,13 +305,13 @@ export function setSchedulerEnabled(enabled: boolean): void {
  */
 export function setWorkflowEnabled(
   workflow: string,
-  enabled: boolean
+  enabled: boolean,
 ): boolean {
   const entry = state.schedules.find((s) => s.workflow === workflow);
   if (!entry) return false;
   entry.enabled = enabled;
   console.error(
-    `[scheduler] Workflow ${workflow}: ${enabled ? "enabled" : "disabled"}`
+    `[scheduler] Workflow ${workflow}: ${enabled ? "enabled" : "disabled"}`,
   );
   return true;
 }
@@ -318,7 +320,7 @@ export function setWorkflowEnabled(
  * Manually trigger a workflow (for API)
  */
 export async function triggerWorkflow(
-  workflow: string
+  workflow: string,
 ): Promise<{ success: boolean; error?: string }> {
   const entry = state.schedules.find((s) => s.workflow === workflow);
   if (!entry) {
@@ -334,7 +336,7 @@ export async function triggerWorkflow(
 
   // Run in background
   executeScheduled(entry).catch((err) =>
-    console.error(`[scheduler] Manual trigger error:`, err)
+    console.error(`[scheduler] Manual trigger error:`, err),
   );
 
   return { success: true };

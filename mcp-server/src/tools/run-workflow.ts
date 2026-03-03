@@ -27,7 +27,7 @@ const WORKFLOW_LABELS: Record<string, string> = {
 let activeWorkflow: string | null = null;
 
 export async function runWorkflow(
-  args: Record<string, unknown>
+  args: Record<string, unknown>,
 ): Promise<{ content: { type: string; text: string }[] }> {
   const { workflow, dry_run = false } = args as RunWorkflowArgs;
 
@@ -63,12 +63,13 @@ export async function runWorkflow(
     let prompt = command;
 
     if (dry_run) {
-      prompt += "\n\nIMPORTANT: This is a DRY RUN / PREVIEW ONLY. Analyze and present what changes would be made, but DO NOT execute any changes. Do not create, modify, move, or delete any files.";
+      prompt +=
+        "\n\nIMPORTANT: This is a DRY RUN / PREVIEW ONLY. Analyze and present what changes would be made, but DO NOT execute any changes. Do not create, modify, move, or delete any files.";
     }
 
     const result = await invokeClaude({
       prompt,
-      timeout: 300000, // 5 minutes - workflows are heavy
+      timeout: 1500000, // 15 minutes - workflows are heavy
     });
 
     let md = `## ${label}${dry_run ? " (Dry Run)" : ""}\n\n`;
